@@ -1,0 +1,116 @@
+<?xml version='1.0' encoding='UTF-8' ?>
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Strict//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-strict.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml"
+      xmlns:h="http://java.sun.com/jsf/html"
+      xmlns:f="http://java.sun.com/jsf/core"
+      xmlns:p="http://primefaces.org/ui">
+      
+    <h:head>
+        <title>Projeto Luiza Labs</title>
+        <link type="text/css" rel="stylesheet" href="dot-luv/skin.css" />
+    </h:head>
+    <h:body>
+        <p:layout fullPage="true">
+            <p:layoutUnit position="center">
+                <h1>Lista de Amigos</h1>
+                <h:panelGrid id="panelButtons" columns="7" style="margin-bottom:10px">
+                    <p:commandButton value="Login Facebook"/>
+                    <p:commandButton value="Novo Amigo" actionListener="#{mainMenu.prepareFriend}" update=":formFriend:panelFriend" oncomplete="PF('dialogFriend').show()"/>
+                    <p:commandButton value="Mensagens" actionListener="#{mainMenu.preparePost}" update=":formPost:tablePosts" oncomplete="PF('dialogPost').show()"/>
+                    <p:inputText></p:inputText>
+                    <p:commandButton value="Buscar"/>
+                </h:panelGrid>
+                <h:form prependId="false">
+                    <p:dataTable id="tableFriends" var="friend" value="">
+                        <p:column>
+                            <f:facet name="header">
+                                <h:outputText value="Id"/>
+                            </f:facet>
+                            <h:outputText value="" />
+                        </p:column>
+                        <p:column>
+                            <f:facet name="header">
+                                <h:outputText value="Nome"/>
+                            </f:facet>
+                            <h:outputText value=""/>
+                        </p:column>
+                        <p:column>
+                            <f:facet name="header">
+                                <h:outputText value="Email"/>
+                            </f:facet>
+                            <h:outputText value=""/>
+                        </p:column>
+                        <p:column>
+                            <f:facet name="header">
+                                <h:outputText value="Cidade"/>
+                            </f:facet>
+                            <h:outputText value=""/>
+                        </p:column>
+                        <p:column>
+                            <f:facet name="header">
+                                <h:outputText value="Data de Nascimento"/>
+                            </f:facet>
+                            <h:outputText value=""/>
+                        </p:column>
+                    </p:dataTable>
+                </h:form>
+            </p:layoutUnit>
+        </p:layout>
+ 
+        <p:dialog header="Informações do Amigo" widgetVar="dialogFriend" resizable="false" modal="true" showEffect="slide" width="800">
+            <h:form id="formFriend">
+                <h:panelGrid id="panelFriend" columns="2">
+                    <h:outputLabel for="name" value="Nome:" />
+                    <h:inputText id="name" size="50" value=""/>
+ 
+                    <h:outputLabel for="email" value="Email:" />
+                    <h:inputText id="email" size="50" value=""/>
+ 
+                    <h:outputLabel for="city" value="Cidade:" />
+                    <h:inputText id="city" size="50" value=""/>
+ 
+                    <h:outputLabel for="birthDate" value="Data Nascimento:" />
+                    <h:inputText id="birthDate" size="50" value=""/>
+                </h:panelGrid>
+                    <p:commandButton update="tableFriends" oncomplete="dialogGerLivro.hide();" value="Salvar"/>
+                    <p:commandButton update="tableFriends" oncomplete="dialogGerLivro.hide();" value="Cancelar"/>     
+
+            </h:form>
+        </p:dialog>
+
+        <p:dialog header="Todas as Mensagens" widgetVar="dialogPost" resizable="false" modal="true" showEffect="slide" width="800">
+            <h:form id="formPost">
+                <p:dataTable id="tablePosts" var="post" value="">
+                    <p:column>
+                        <f:facet name="header">
+                            <h:outputText value="Id"/>
+                        </f:facet>
+                        <h:outputText value=""/>
+                    </p:column>
+                    <p:column>
+                        <f:facet name="header">
+                            <h:outputText value="Amigo"/>
+                        </f:facet>
+                        <h:outputText value=""/>
+                    </p:column>
+                    <p:column>
+                        <f:facet name="header">
+                            <h:outputText value="Mensagem"/>
+                        </f:facet>
+                        <h:outputText value=""/>
+                    </p:column>
+                    <p:column>
+                        <f:facet name="header">
+                            <h:outputText value="Data de Envio"/>
+                        </f:facet>
+                        <h:outputText value=""/>
+                    </p:column>
+                </p:dataTable>
+
+                <p:commandButton update="tableFriends" oncomplete="dialogGerLivro.hide();" value="Salvar"/>
+                <p:commandButton update="tableFriends" oncomplete="dialogGerLivro.hide();" value="Cancelar"/>     
+            </h:form>
+        </p:dialog>
+ 
+    </h:body>
+</html>
