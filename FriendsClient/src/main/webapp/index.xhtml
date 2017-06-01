@@ -3,25 +3,24 @@
 <html xmlns="http://www.w3.org/1999/xhtml"
       xmlns:h="http://java.sun.com/jsf/html"
       xmlns:f="http://java.sun.com/jsf/core"
-      xmlns:p="http://primefaces.org/ui">
-      
+      xmlns:p="http://primefaces.org/ui"
+      xmlns:pm="http://primefaces.org/mobile">
+    <f:view renderKitId="PRIMEFACES_MOBILE" />
     <h:head>
-        <title>Projeto Luiza Labs</title>
-        <link type="text/css" rel="stylesheet" href="dot-luv/skin.css" />
     </h:head>
     <h:body>
-        <p:layout fullPage="true">
-            <p:layoutUnit position="center">
-                <h1>Lista de Amigos</h1>
-                <h:panelGrid id="panelButtons" columns="7" style="margin-bottom:10px">
-                    <p:commandButton value="Login Facebook"/>
-                    <p:commandButton value="Novo Amigo" actionListener="#{mainMenu.prepareFriend}" update=":formFriend:panelFriend" oncomplete="PF('dialogFriend').show()"/>
-                    <p:commandButton value="Mensagens" actionListener="#{mainMenu.preparePost}" update=":formPost:tablePosts" oncomplete="PF('dialogPost').show()"/>
-                    <p:inputText></p:inputText>
-                    <p:commandButton value="Buscar"/>
-                </h:panelGrid>
-                <h:form prependId="false">
-                    <p:dataTable id="tableFriends" var="friend" value="">
+        <pm:page id="mainPage">
+            <pm:header title="Lista de Amigos"></pm:header>             
+            <pm:content>
+                <h:form id="mainForm">
+                    <h:panelGrid id="mainPanel" columns="6">
+                        <p:commandButton value="Login Facebook"/>
+                        <p:commandButton value="Novo Amigo" actionListener="#{mainMenu.prepareFriend}" update="friendDialog" oncomplete="PF('friendDialog').show()"/>
+                        <p:commandButton value="Mensagens" action="#{mainMenu.preparePost}"/>
+                        <p:inputText></p:inputText>
+                        <p:commandButton value="Buscar"/>
+                    </h:panelGrid>
+                    <p:dataTable id="friendsTable" var="friend" value="">
                         <p:column>
                             <f:facet name="header">
                                 <h:outputText value="Id"/>
@@ -48,39 +47,74 @@
                         </p:column>
                         <p:column>
                             <f:facet name="header">
-                                <h:outputText value="Data de Nascimento"/>
+                                <h:outputText value="Nascimento"/>
                             </f:facet>
                             <h:outputText value=""/>
                         </p:column>
                     </p:dataTable>
                 </h:form>
-            </p:layoutUnit>
-        </p:layout>
- 
-        <p:dialog header="Informações do Amigo" widgetVar="dialogFriend" resizable="false" modal="true" showEffect="slide" width="800">
-            <h:form id="formFriend">
-                <h:panelGrid id="panelFriend" columns="2">
-                    <h:outputLabel for="name" value="Nome:" />
-                    <h:inputText id="name" size="50" value=""/>
- 
-                    <h:outputLabel for="email" value="Email:" />
-                    <h:inputText id="email" size="50" value=""/>
- 
-                    <h:outputLabel for="city" value="Cidade:" />
-                    <h:inputText id="city" size="50" value=""/>
- 
-                    <h:outputLabel for="birthDate" value="Data Nascimento:" />
-                    <h:inputText id="birthDate" size="50" value=""/>
-                </h:panelGrid>
-                    <p:commandButton update="tableFriends" oncomplete="dialogGerLivro.hide();" value="Salvar"/>
-                    <p:commandButton update="tableFriends" oncomplete="dialogGerLivro.hide();" value="Cancelar"/>     
+            </pm:content>
+        </pm:page>
 
+        <pm:page id="postPage">
+            <pm:header title="Lista de Mensagens do Amigo"></pm:header>             
+            <pm:content>
+                <h:form id="postForm">
+                    <h:panelGrid id="postPanel" columns="2">
+                        <p:button outcome="pm:mainPage" value="Voltar" />
+                        <p:commandButton value="Nova Mensagem" actionListener="#{mainMenu.prepareFriend}" update="postFriendDialog" oncomplete="PF('postFriendDialog').show()"/>
+                    </h:panelGrid>
+                    <p:dataTable id="postsFriendTable" var="friend" value="">
+                        <p:column>
+                            <f:facet name="header">
+                                <h:outputText value="Id"/>
+                            </f:facet>
+                            <h:outputText value="" />
+                        </p:column>
+                        <p:column>
+                            <f:facet name="header">
+                                <h:outputText value="Amigo"/>
+                            </f:facet>
+                            <h:outputText value=""/>
+                        </p:column>
+                        <p:column>
+                            <f:facet name="header">
+                                <h:outputText value="Mensagem"/>
+                            </f:facet>
+                            <h:outputText value=""/>
+                        </p:column>
+                        <p:column>
+                            <f:facet name="header">
+                                <h:outputText value="Data Envio"/>
+                            </f:facet>
+                            <h:outputText value=""/>
+                        </p:column>
+                    </p:dataTable>
+                </h:form>
+            </pm:content>
+        </pm:page>
+
+        <p:dialog id="friendDialog" header="Informações do Amigo" widgetVar="friendDialog" resizable="true" modal="true" showEffect="pop" styleClass="ui-page-theme-a ui-bar-inherit">
+            <h:form id="friendForm">
+                <h:outputLabel for="name" value="Nome:" />
+                <h:inputText id="name" size="70" value=""/>
+ 
+                <h:outputLabel for="email" value="Email:" />
+                <h:inputText id="email" size="70" value=""/>
+ 
+                <h:outputLabel for="city" value="Cidade:" />
+                <h:inputText id="city" size="70" value=""/>
+ 
+                <h:outputLabel for="birthDate" value="Data Nascimento:" />
+                <h:inputText id="birthDate" size="70" value=""/>
+                <p:commandButton update="mainPage" oncomplete="friendDialog.hide();" value="Salvar"/>
+                <p:commandButton update="mainPage" oncomplete="friendDialog.hide();" value="Cancelar"/>     
             </h:form>
         </p:dialog>
 
-        <p:dialog header="Todas as Mensagens" widgetVar="dialogPost" resizable="false" modal="true" showEffect="slide" width="800">
-            <h:form id="formPost">
-                <p:dataTable id="tablePosts" var="post" value="">
+        <p:dialog id="postDialog" header="Mensagens do Amigo" widgetVar="postDialog" resizable="false" modal="true" showEffect="pop" styleClass="ui-page-theme-a ui-bar-inherit">
+            <h:form id="postForm">
+                <p:dataTable id="postsTable" var="post" value="">
                     <p:column>
                         <f:facet name="header">
                             <h:outputText value="Id"/>
@@ -106,11 +140,19 @@
                         <h:outputText value=""/>
                     </p:column>
                 </p:dataTable>
-
-                <p:commandButton update="tableFriends" oncomplete="dialogGerLivro.hide();" value="Salvar"/>
-                <p:commandButton update="tableFriends" oncomplete="dialogGerLivro.hide();" value="Cancelar"/>     
+                <p:commandButton update="mainPage" oncomplete="dialogGerLivro.hide();" value="Salvar"/>
+                <p:commandButton update="mainPage" oncomplete="dialogGerLivro.hide();" value="Cancelar"/>     
+            </h:form>
+        </p:dialog> 
+        
+        <p:dialog id="postFriendDialog" header="Informações da Mensagem" widgetVar="postFriendDialog" resizable="true" modal="true" showEffect="pop" styleClass="ui-page-theme-a ui-bar-inherit">
+            <h:form id="postFriendForm">
+                <h:outputLabel for="name" value="Mensagem" />
+                <h:inputTextarea id="name" rows="15" cols="80" value=""/>
+                <p:commandButton update="postPage" oncomplete="postFriendDialog.hide();" value="Enviar"/>
+                <p:commandButton update="postPage" oncomplete="postFriendDialog.hide();" value="Cancelar"/>     
             </h:form>
         </p:dialog>
- 
+
     </h:body>
 </html>

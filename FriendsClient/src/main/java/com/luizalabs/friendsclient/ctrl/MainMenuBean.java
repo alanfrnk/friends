@@ -47,7 +47,7 @@ public class MainMenuBean implements Serializable {
         this.post = post;
     }
 
-    public void preparePost(ActionEvent actionEvent){
-        post = new Post();
+    public String preparePost(){
+        return "pm:postPage";
     }
 }
