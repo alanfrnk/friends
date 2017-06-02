@@ -5,7 +5,6 @@
  */
 package com.luizalabs.friendsserver.http;
 
-import java.util.Date;
 import javax.xml.bind.annotation.XmlRootElement;
 
 /**
@@ -19,13 +18,13 @@ public class FriendHttp {
     private String name;
     private String email;
     private String city;
-    private Date birthDate;
+    private String birthDate;
 
     public FriendHttp(){
     
     }
     
-    public FriendHttp(int id, String name, String email, String city, Date birthDate){
+    public FriendHttp(int id, String name, String email, String city, String birthDate){
         super();
         this.id = id;
         this.name = name;
@@ -66,11 +65,11 @@ public class FriendHttp {
         this.city = city;
     }
 
-    public Date getBirthDate() {
+    public String getBirthDate() {
         return birthDate;
     }
 
-    public void setBirthDate(Date birthDate) {
+    public void setBirthDate(String birthDate) {
         this.birthDate = birthDate;
     }    
 }

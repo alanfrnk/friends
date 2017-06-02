@@ -12,6 +12,8 @@ import com.luizalabs.friendsserver.dao.PostDaoImpl;
 import com.luizalabs.friendsserver.http.PostHttp;
 import com.luizalabs.friendsserver.model.Friend;
 import com.luizalabs.friendsserver.model.Post;
+import com.luizalabs.friendsserver.util.Util;
+import java.text.ParseException;
 import java.util.ArrayList;
 import java.util.List;
 import javax.ws.rs.Consumes;
@@ -30,50 +32,68 @@ import javax.ws.rs.Produces;
 @Path("/posts")
 public class PostController {
     
-    PostDao dao = new PostDaoImpl();
-    FriendDao daoFriend = new FriendDaoImpl();
+    private final PostDao dao = new PostDaoImpl();
+    private final FriendDao daoFriend = new FriendDaoImpl();
 
+    /**
+     *
+     * @param postHttp
+     * @return
+     */
     @POST	
     @Consumes("application/json; charset=UTF-8")
     @Produces("application/json; charset=UTF-8")
-    public String Post(PostHttp postHttp) {
+    public String newPost(PostHttp postHttp) {
         Post post = new Post();
 
-        try { 
+        try {            
             post.setMessage(postHttp.getMessage());
-            post.setSendDate(postHttp.getSendDate());
-            Friend friendReceiver = daoFriend.getFriend(postHttp.getFriendReceiver());
+            post.setSendDate(new Util().toDate(postHttp.getSendDate(), "yyyy-MM-dd"));
+            Friend friendReceiver = daoFriend.getFriend(postHttp.getFriendReceiver());            
             post.setFriendReceiver(friendReceiver);
-            Friend friendSender = daoFriend.getFriend(postHttp.getFriendSender());
+            Friend friendSender = daoFriend.getFriend(postHttp.getFriendSender());            
             post.setFriendSender(friendSender); 
+            
             dao.save(post); 
+            
             return "Registro cadastrado com sucesso!"; 
-        } catch (Exception e) { 
+        } catch (ParseException e) { 
             return "Erro ao cadastrar um registro " + e.getMessage();
         }
     }
     
+    /**
+     *
+     * @param postHttp
+     * @return
+     */
     @PUT
     @Produces("application/json; charset=UTF-8")
     @Consumes("application/json; charset=UTF-8")	
-    public String Put(PostHttp postHttp) {
+    public String editPost(PostHttp postHttp) {
         Post post = new Post();
 
-        try {
+        try {            
             post.setId(postHttp.getId());
             post.setMessage(postHttp.getMessage());
-            post.setSendDate(postHttp.getSendDate());
+            post.setSendDate(new Util().toDate(postHttp.getSendDate(), "yyyy-MM-dd"));
             Friend friendReceiver = daoFriend.getFriend(postHttp.getFriendReceiver());
             post.setFriendReceiver(friendReceiver);
             Friend friendSender = daoFriend.getFriend(postHttp.getFriendSender());
-            post.setFriendSender(friendSender);            
+            post.setFriendSender(friendSender);                        
+            
             dao.update(post);
+            
             return "Registro alterado com sucesso!";
-        } catch (Exception e) {
+        } catch (ParseException e) {
             return "Erro ao alterar o registro " + e.getMessage();
         }
     }
    
+    /**
+     *
+     * @return
+     */
     @GET
     @Produces("application/json; charset=UTF-8")
     public List<PostHttp> ListAll() {
@@ -81,28 +101,38 @@ public class PostController {
         List<Post> postList = dao.list();
 
         for (Post p : postList) {
-            postHttpList.add(new PostHttp(p.getId(), p.getMessage(), p.getSendDate(), p.getFriendReceiver().getId(), p.getFriendSender().getId()));
+            postHttpList.add(new PostHttp(p.getId(), p.getMessage(), p.getSendDate().toString(), p.getFriendReceiver().getId(), p.getFriendSender().getId()));
         }
 
         return postHttpList;
     }
 
+    /**
+     *
+     * @param id
+     * @return
+     */
     @GET
     @Produces("application/json; charset=UTF-8")
     @Path("/{id}")
-    public PostHttp GetPost(@PathParam("id") Integer id) {
+    public PostHttp getPost(@PathParam("id") Integer id) {
         Post post = dao.getPost(id);
 
         if(post != null)
-            return new PostHttp(post.getId(), post.getMessage(), post.getSendDate(), post.getFriendReceiver().getId(), post.getFriendSender().getId());
+            return new PostHttp(post.getId(), post.getMessage(), post.getSendDate().toString(), post.getFriendReceiver().getId(), post.getFriendSender().getId());
 
         return null;
     }
 
+    /**
+     *
+     * @param id
+     * @return
+     */
     @DELETE
     @Produces("application/json; charset=UTF-8")
     @Path("/{id}")	
-    public String Delete(@PathParam("id") Integer id) {
+    public String deletePost(@PathParam("id") Integer id) {
         try {
             dao.remove(id);
             return "Registro excluido com sucesso!";

@@ -29,7 +29,9 @@ public class PostDaoImpl implements PostDao {
     @Override
     public Post getPost(int id) {
         Session session = HibernateUtil.getSessionFactory().openSession();
-        return (Post) session.load(Post.class, id);
+        Post post = (Post) session.load(Post.class, id);
+        session.close();
+        return post;
     }
 
     @Override

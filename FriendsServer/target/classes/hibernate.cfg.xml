@@ -50,5 +50,6 @@ Contributor(s):
         <property name="hibernate.connection.password">alan12345</property>
         <property name="hibernate.show_sql">true</property>
         <property name="hibernate.format_sql">true</property>
+        <property name="hibernate.enable_lazy_load_no_trans">true</property>
     </session-factory>
 </hibernate-configuration>

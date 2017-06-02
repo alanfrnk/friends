@@ -1,10 +1,13 @@
 com/luizalabs/friendsserver/controller/FriendController.class
+com/luizalabs/friendsserver/controller/PostController.class
 com/luizalabs/friendsserver/dao/PostDaoImpl.class
 com/luizalabs/friendsserver/model/Post.class
+com/luizalabs/friendsserver/http/PostHttp.class
 com/luizalabs/friendsserver/dao/FriendDaoImpl.class
 com/luizalabs/friendsserver/util/HibernateUtil.class
 com/luizalabs/friendsserver/http/FriendHttp.class
 NewClass.class
 com/luizalabs/friendsserver/dao/FriendDao.class
 com/luizalabs/friendsserver/dao/PostDao.class
+com/luizalabs/friendsserver/util/Util.class
 com/luizalabs/friendsserver/model/Friend.class

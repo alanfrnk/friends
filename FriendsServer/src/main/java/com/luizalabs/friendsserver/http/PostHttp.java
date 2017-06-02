@@ -5,7 +5,6 @@
  */
 package com.luizalabs.friendsserver.http;
 
-import java.util.Date;
 import javax.xml.bind.annotation.XmlRootElement;
 
 /**
@@ -17,7 +16,7 @@ public class PostHttp {
     
     private int id;
     private String message;
-    private Date sendDate;
+    private String sendDate;
     private int friendSender;
     private int friendReceiver;
 
@@ -25,7 +24,7 @@ public class PostHttp {
     
     }
     
-    public PostHttp(int id, String message, Date sendDate, int friendSender, int friendReceiver) {
+    public PostHttp(int id, String message, String sendDate, int friendSender, int friendReceiver) {
         super();
         this.id = id;
         this.message = message;
@@ -50,11 +49,11 @@ public class PostHttp {
         this.message = message;
     }
 
-    public Date getSendDate() {
+    public String getSendDate() {
         return sendDate;
     }
 
-    public void setSendDate(Date sendDate) {
+    public void setSendDate(String sendDate) {
         this.sendDate = sendDate;
     }
 

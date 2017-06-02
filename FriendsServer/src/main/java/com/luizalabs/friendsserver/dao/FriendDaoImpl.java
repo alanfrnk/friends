@@ -29,7 +29,9 @@ public class FriendDaoImpl implements FriendDao {
     @Override
     public Friend getFriend(int id) {
         Session session = HibernateUtil.getSessionFactory().openSession();
-        return (Friend) session.load(Friend.class, id);
+        Friend friend = (Friend) session.load(Friend.class, id);
+        session.close();
+        return friend;
     }
 
     @Override

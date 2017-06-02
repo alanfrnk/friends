@@ -4,6 +4,8 @@ import com.luizalabs.friendsserver.dao.FriendDao;
 import com.luizalabs.friendsserver.dao.FriendDaoImpl;
 import com.luizalabs.friendsserver.http.FriendHttp;
 import com.luizalabs.friendsserver.model.Friend;
+import com.luizalabs.friendsserver.util.Util;
+import java.text.ParseException;
 import java.util.ArrayList;
 import java.util.List;
 import javax.ws.rs.Consumes;
@@ -28,8 +30,17 @@ import javax.ws.rs.Produces;
 @Path("/friends")
 public class FriendController {
 
-    FriendDao dao = new FriendDaoImpl();
+    private final FriendDao dao;
 
+    public FriendController() {
+        this.dao = new FriendDaoImpl();
+    }
+
+    /**
+     *
+     * @param friendHttp
+     * @return
+     */
     @POST	
     @Consumes("application/json; charset=UTF-8")
     @Produces("application/json; charset=UTF-8")
@@ -40,14 +51,19 @@ public class FriendController {
             friend.setName(friendHttp.getName());
             friend.setEmail(friendHttp.getEmail());
             friend.setCity(friendHttp.getCity());
-            friend.setBirthDate(friendHttp.getBirthDate()); 
+            friend.setBirthDate(new Util().toDate(friendHttp.getBirthDate(), "yyyy-MM-dd")); 
             dao.save(friend); 
             return "Registro cadastrado com sucesso!"; 
-        } catch (Exception e) { 
+        } catch (ParseException e) { 
             return "Erro ao cadastrar um registro " + e.getMessage();
         }
     }
     
+    /**
+     *
+     * @param friendHttp
+     * @return
+     */
     @PUT
     @Produces("application/json; charset=UTF-8")
     @Consumes("application/json; charset=UTF-8")	
@@ -59,14 +75,18 @@ public class FriendController {
             friend.setName(friendHttp.getName());
             friend.setEmail(friendHttp.getEmail());
             friend.setCity(friendHttp.getCity());
-            friend.setBirthDate(friendHttp.getBirthDate());           
+            friend.setBirthDate(new Util().toDate(friendHttp.getBirthDate(), "yyyy-MM-dd"));           
             dao.update(friend);
             return "Registro alterado com sucesso!";
-        } catch (Exception e) {
+        } catch (ParseException e) {
             return "Erro ao alterar o registro " + e.getMessage();
         }
     }
    
+    /**
+     *
+     * @return
+     */
     @GET
     @Produces("application/json; charset=UTF-8")
     public List<FriendHttp> ListAll() {
@@ -74,12 +94,17 @@ public class FriendController {
         List<Friend> friendList = dao.list();
 
         for (Friend f : friendList) {
-            friendHttpList.add(new FriendHttp(f.getId(), f.getName(), f.getEmail(), f.getCity(), f.getBirthDate()));
+            friendHttpList.add(new FriendHttp(f.getId(), f.getName(), f.getEmail(), f.getCity(), f.getBirthDate().toString()));
         }
 
         return friendHttpList;
     }
 
+    /**
+     *
+     * @param id
+     * @return
+     */
     @GET
     @Produces("application/json; charset=UTF-8")
     @Path("/{id}")
@@ -87,11 +112,16 @@ public class FriendController {
         Friend friend = dao.getFriend(id);
 
         if(friend != null)
-            return new FriendHttp(friend.getId(), friend.getName(), friend.getEmail(), friend.getCity(), friend.getBirthDate());
+            return new FriendHttp(friend.getId(), friend.getName(), friend.getEmail(), friend.getCity(), friend.getBirthDate().toString());
 
         return null;
     }
 
+    /**
+     *
+     * @param id
+     * @return
+     */
     @DELETE
     @Produces("application/json; charset=UTF-8")
     @Path("/{id}")	
