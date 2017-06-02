@@ -3,6 +3,7 @@
 
 # Arquivos Mac
 *.DS_Store
+*.netbeans_automatic_build
 
 # Log file
 *.log
