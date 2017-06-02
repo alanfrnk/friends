@@ -71,14 +71,12 @@ public class Friend {
     
     @Override
     public String toString() {
-
         StringBuilder stringBuilder = new StringBuilder();
-        stringBuilder.append("Id : ").append(this.id).append('\n');
-        stringBuilder.append("Name : ").append(this.name).append('\n');
-        stringBuilder.append("Email : ").append(this.email).append('\n');
-        stringBuilder.append("City : ").append(this.city).append('\n');
-        stringBuilder.append("Birth Date : ").append(this.birthDate).append('\n');
-
+        stringBuilder.append("id : ").append(this.id).append('\n');
+        stringBuilder.append("name : ").append(this.name).append('\n');
+        stringBuilder.append("email : ").append(this.email).append('\n');
+        stringBuilder.append("city : ").append(this.city).append('\n');
+        stringBuilder.append("birthDate : ").append(this.birthDate).append('\n');
         return stringBuilder.toString();
     }
 }

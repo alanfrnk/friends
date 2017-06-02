@@ -5,6 +5,8 @@
  */
 package com.luizalabs.friendsclient.model;
 
+import java.text.SimpleDateFormat;
+
 /**
  *
  * @author alanfrank
@@ -20,7 +22,8 @@ public class Post {
     
     }
     
-    public Post(int id, String message, String sendDate, int friendReceiver, int friendSender) {
+    public Post(int id, String message, String sendDate,
+            int friendReceiver, int friendSender) {
         super();
         this.id = id;
         this.message = message;
@@ -67,5 +70,18 @@ public class Post {
 
     public void setFriendReceiver(int friendReceiver) {
         this.friendReceiver = friendReceiver;
-    }    
+    }
+
+    @Override
+    public String toString(){
+        StringBuilder stringBuilder = new StringBuilder();
+        stringBuilder.append("id : ").append(this.id).append('\n');
+        stringBuilder.append("message : ").append(this.message).append('\n');
+        stringBuilder.append("sendDate : ").append(this.sendDate).append('\n');
+        stringBuilder.append("friendSender : ")
+                .append(this.friendSender).append('\n');
+        stringBuilder.append("friendReceiver : ")
+                .append(this.friendReceiver).append('\n');
+        return stringBuilder.toString();
+    }
 }
