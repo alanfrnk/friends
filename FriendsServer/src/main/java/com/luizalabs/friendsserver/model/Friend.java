@@ -6,6 +6,7 @@
 package com.luizalabs.friendsserver.model;
 
 import java.io.Serializable;
+import java.text.SimpleDateFormat;
 import java.util.Date;
 import javax.persistence.Entity;
 import javax.persistence.Id;
@@ -99,5 +100,18 @@ public class Friend implements Serializable {
      */
     public void setBirthDate(Date birthDate) {
         this.birthDate = birthDate;
+    }
+    
+    @Override
+    public String toString() {
+        StringBuilder stringBuilder = new StringBuilder();
+        stringBuilder.append("id : ").append(this.id).append('\n');
+        stringBuilder.append("name : ").append(this.name).append('\n');
+        stringBuilder.append("email : ").append(this.email).append('\n');
+        stringBuilder.append("city : ").append(this.city).append('\n');
+        stringBuilder.append("birthDate : ")
+                .append(new SimpleDateFormat("yyyy-MM-dd")
+                        .format(this.birthDate));
+        return stringBuilder.toString();
     }
 }

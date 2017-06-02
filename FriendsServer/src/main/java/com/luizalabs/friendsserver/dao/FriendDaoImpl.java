@@ -29,7 +29,7 @@ public class FriendDaoImpl implements FriendDao {
     @Override
     public Friend getFriend(int id) {
         Session session = HibernateUtil.getSessionFactory().openSession();
-        Friend friend = (Friend) session.load(Friend.class, id);
+        Friend friend = (Friend) session.get(Friend.class, id);
         session.close();
         return friend;
     }
@@ -57,7 +57,7 @@ public class FriendDaoImpl implements FriendDao {
     public void remove(int id) {
         Session session = HibernateUtil.getSessionFactory().openSession();
         Transaction t = session.beginTransaction();
-        Friend friend = (Friend) session.load(Friend.class, id);
+        Friend friend = (Friend) session.get(Friend.class, id);
         session.delete(friend);
         t.commit();
         session.close();

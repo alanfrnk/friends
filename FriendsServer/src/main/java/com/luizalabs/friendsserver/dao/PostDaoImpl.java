@@ -29,7 +29,7 @@ public class PostDaoImpl implements PostDao {
     @Override
     public Post getPost(int id) {
         Session session = HibernateUtil.getSessionFactory().openSession();
-        Post post = (Post) session.load(Post.class, id);
+        Post post = (Post) session.get(Post.class, id);
         session.close();
         return post;
     }
@@ -67,7 +67,7 @@ public class PostDaoImpl implements PostDao {
     public void remove(int id) {
         Session session = HibernateUtil.getSessionFactory().openSession();
         Transaction t = session.beginTransaction();
-        Post post = (Post) session.load(Post.class, id);
+        Post post = (Post) session.get(Post.class, id);
         session.delete(post);
         t.commit();
         session.close();

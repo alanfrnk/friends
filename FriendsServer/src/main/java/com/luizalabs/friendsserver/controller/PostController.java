@@ -24,6 +24,7 @@ import javax.ws.rs.PUT;
 import javax.ws.rs.Path;
 import javax.ws.rs.PathParam;
 import javax.ws.rs.Produces;
+import javax.ws.rs.core.Response;
 
 /**
  *
@@ -43,9 +44,29 @@ public class PostController {
     @POST	
     @Consumes("application/json; charset=UTF-8")
     @Produces("application/json; charset=UTF-8")
-    public String newPost(PostHttp postHttp) {
+    public Response newPost(PostHttp postHttp) {
         Post post = new Post();
-
+        
+        if(postHttp.getMessage() == null) {
+            return Response.status(400)
+                    .entity("Por favor, forneça o campo message").build();
+        }
+        
+        if(postHttp.getSendDate() == null) {
+            return Response.status(400)
+                    .entity("Por favor, forneça o campo sendDate").build();
+        }
+        
+        if(postHttp.getFriendSender() < 1) {
+            return Response.status(400)
+                    .entity("Por favor, forneça o campo friendSender").build();
+        }
+        
+        if(postHttp.getFriendReceiver()< 1) {
+            return Response.status(400)
+                    .entity("Por favor, forneça o campo friendReceiver").build();
+        }
+        
         try {            
             post.setMessage(postHttp.getMessage());
             post.setSendDate(new Util().toDate(postHttp.getSendDate(), "yyyy-MM-dd"));
@@ -56,9 +77,10 @@ public class PostController {
             
             dao.save(post); 
             
-            return "Registro cadastrado com sucesso!"; 
+            String data = "Mensagem salva com sucesso: " + post.toString();
+            return Response.status(201).entity(data).build();
         } catch (ParseException e) { 
-            return "Erro ao cadastrar um registro " + e.getMessage();
+            return Response.status(500).entity(e.getMessage()).build();
         }
     }
     
@@ -70,9 +92,39 @@ public class PostController {
     @PUT
     @Produces("application/json; charset=UTF-8")
     @Consumes("application/json; charset=UTF-8")	
-    public String editPost(PostHttp postHttp) {
-        Post post = new Post();
+    public Response editPost(PostHttp postHttp) {
+        Post post = dao.getPost(postHttp.getId());
 
+        if(post == null) {
+            return Response.status(404).entity("A mensagem com id: " 
+                    + postHttp.getId() + " não existe").build();
+        }
+        
+        if(postHttp.getId() < 1) {
+            return Response.status(400)
+                    .entity("Por favor, forneça o campo id").build();
+        }
+        
+        if(postHttp.getMessage() == null) {
+            return Response.status(400)
+                    .entity("Por favor, forneça o campo message").build();
+        }
+        
+        if(postHttp.getSendDate() == null) {
+            return Response.status(400)
+                    .entity("Por favor, forneça o campo sendDate").build();
+        }
+        
+        if(postHttp.getFriendSender() < 1) {
+            return Response.status(400)
+                    .entity("Por favor, forneça o campo friendSender").build();
+        }
+        
+        if(postHttp.getFriendReceiver()< 1) {
+            return Response.status(400)
+                    .entity("Por favor, forneça o campo friendReceiver").build();
+        }
+        
         try {            
             post.setId(postHttp.getId());
             post.setMessage(postHttp.getMessage());
@@ -84,9 +136,10 @@ public class PostController {
             
             dao.update(post);
             
-            return "Registro alterado com sucesso!";
+            String data = "Mensagem editada com sucesso: " + post.toString();
+            return Response.status(200).entity(data).build();
         } catch (ParseException e) {
-            return "Erro ao alterar o registro " + e.getMessage();
+            return Response.status(500).entity(e.getMessage()).build();
         }
     }
    
@@ -96,14 +149,16 @@ public class PostController {
      */
     @GET
     @Produces("application/json; charset=UTF-8")
-    public List<PostHttp> ListAll() {
+    public List<PostHttp> listAll() {
         List<PostHttp> postHttpList =  new ArrayList<>();
         List<Post> postList = dao.list();
-
+        
         for (Post p : postList) {
-            postHttpList.add(new PostHttp(p.getId(), p.getMessage(), p.getSendDate().toString(), p.getFriendReceiver().getId(), p.getFriendSender().getId()));
+            postHttpList.add(new PostHttp(p.getId(), p.getMessage(), 
+                    p.getSendDate().toString(), p.getFriendReceiver().getId(), 
+                    p.getFriendSender().getId()));
         }
-
+        
         return postHttpList;
     }
 
@@ -115,13 +170,19 @@ public class PostController {
     @GET
     @Produces("application/json; charset=UTF-8")
     @Path("/{id}")
-    public PostHttp getPost(@PathParam("id") Integer id) {
+    public Response getPost(@PathParam("id") Integer id) {        
         Post post = dao.getPost(id);
-
-        if(post != null)
-            return new PostHttp(post.getId(), post.getMessage(), post.getSendDate().toString(), post.getFriendReceiver().getId(), post.getFriendSender().getId());
-
-        return null;
+        PostHttp postHttp;
+        
+        if (post != null) {
+            postHttp = new PostHttp(post.getId(), post.getMessage(), 
+                    post.getSendDate().toString(), post.getFriendReceiver().getId(), 
+                    post.getFriendSender().getId());
+            return Response.status(200).entity(postHttp).build();
+        } else {
+            return Response.status(404).entity("A mensagem com id: " + id + 
+                    " não foi encontrada").build();
+        }
     }
     
     /**
@@ -137,7 +198,9 @@ public class PostController {
         List<Post> postList = dao.listBySender(id);
 
         for (Post p : postList) {
-            postHttpList.add(new PostHttp(p.getId(), p.getMessage(), p.getSendDate().toString(), p.getFriendReceiver().getId(), p.getFriendSender().getId()));
+            postHttpList.add(new PostHttp(p.getId(), p.getMessage(), 
+                    p.getSendDate().toString(), p.getFriendReceiver().getId(), 
+                    p.getFriendSender().getId()));
         }
 
         return postHttpList;
@@ -151,12 +214,18 @@ public class PostController {
     @DELETE
     @Produces("application/json; charset=UTF-8")
     @Path("/{id}")	
-    public String deletePost(@PathParam("id") Integer id) {
+    public Response deletePost(@PathParam("id") Integer id) {
+        if(dao.getPost(id) == null) {
+            return Response.status(404).entity("A mensagem com id: " + id + 
+                    " não foi encontrada").build();
+        }
+                    
         try {
             dao.remove(id);
-            return "Registro excluido com sucesso!";
+            return Response.status(200).entity("A mensagem com id " + id + 
+                    " foi exlcuída com sucesso").build();
         } catch (Exception e) {
-            return "Erro ao excluir o registro! " + e.getMessage();
+            return Response.status(500).entity(e.getMessage()).build();
         }
     }
 }

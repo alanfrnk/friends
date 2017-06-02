@@ -6,6 +6,7 @@
 package com.luizalabs.friendsserver.model;
 
 import java.io.Serializable;
+import java.text.SimpleDateFormat;
 import java.util.Date;
 import javax.persistence.Entity;
 import javax.persistence.FetchType;
@@ -105,5 +106,20 @@ public class Post implements Serializable{
      */
     public void setMessage(String message) {
         this.message = message;
+    }
+    
+    @Override
+    public String toString(){
+        StringBuilder stringBuilder = new StringBuilder();
+        stringBuilder.append("id : ").append(this.id).append('\n');
+        stringBuilder.append("message : ").append(this.message).append('\n');
+        stringBuilder.append("sendDate : ")
+                .append(new SimpleDateFormat("yyyy-MM-dd")
+                        .format(this.sendDate)).append('\n');
+        stringBuilder.append("friendSender : ")
+                .append(this.friendSender).append('\n');
+        stringBuilder.append("friendReceiver : ")
+                .append(this.friendReceiver).append('\n');
+        return stringBuilder.toString();
     }
 }

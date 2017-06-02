@@ -16,6 +16,7 @@ import javax.ws.rs.PUT;
 import javax.ws.rs.Path;
 import javax.ws.rs.PathParam;
 import javax.ws.rs.Produces;
+import javax.ws.rs.core.Response;
 
 /*
  * To change this license header, choose License Headers in Project Properties.
@@ -44,18 +45,41 @@ public class FriendController {
     @POST	
     @Consumes("application/json; charset=UTF-8")
     @Produces("application/json; charset=UTF-8")
-    public String Post(FriendHttp friendHttp) {
+    public Response newFriend(FriendHttp friendHttp) {
         Friend friend = new Friend();
+        
+        if (friendHttp.getName() == null) {
+            return Response.status(400)
+                    .entity("Por favor, forneça o campo name").build();
+        }
+        
+        if (friendHttp.getBirthDate() == null) {
+            return Response.status(400)
+                    .entity("Por favor, forneça o campo birthDate").build();
+        }
+        
+        if (friendHttp.getCity() == null) {
+            return Response.status(400)
+                    .entity("Por favor, forneça o campo city").build();
+        }
+        
+        if (friendHttp.getEmail() == null) {
+            return Response.status(400)
+                    .entity("Por favor, forneça o campo email").build();
+        }
 
         try { 
             friend.setName(friendHttp.getName());
             friend.setEmail(friendHttp.getEmail());
             friend.setCity(friendHttp.getCity());
-            friend.setBirthDate(new Util().toDate(friendHttp.getBirthDate(), "yyyy-MM-dd")); 
+            friend.setBirthDate(new Util().toDate(friendHttp.getBirthDate(), "yyyy-MM-dd"));
+            
             dao.save(friend); 
-            return "Registro cadastrado com sucesso!"; 
+            
+            String data = "Amigo salvo com sucesso: " + friend.toString();
+            return Response.status(201).entity(data).build();
         } catch (ParseException e) { 
-            return "Erro ao cadastrar um registro " + e.getMessage();
+            return Response.status(500).entity(e.getMessage()).build();
         }
     }
     
@@ -67,19 +91,52 @@ public class FriendController {
     @PUT
     @Produces("application/json; charset=UTF-8")
     @Consumes("application/json; charset=UTF-8")	
-    public String Put(FriendHttp friendHttp) {
-        Friend friend = new Friend();
+    public Response editFriend(FriendHttp friendHttp) {
+        Friend friend = dao.getFriend(friendHttp.getId());
 
+        if (friend == null) {
+            return Response.status(404).entity("O amigo com id: " 
+                    + friendHttp.getId() + " não existe").build();
+        }
+        
+        if(friendHttp.getId() < 1) {
+            return Response.status(400)
+                    .entity("Por favor, forneça o campo id").build();
+        }
+        
+        if (friendHttp.getName() == null) {
+            return Response.status(400)
+                    .entity("Por favor, forneça o campo name").build();
+        }
+        
+        if (friendHttp.getBirthDate() == null) {
+            return Response.status(400)
+                    .entity("Por favor, forneça o campo birthDate").build();
+        }
+        
+        if (friendHttp.getCity() == null) {
+            return Response.status(400)
+                    .entity("Por favor, forneça o campo city").build();
+        }
+        
+        if (friendHttp.getEmail() == null) {
+            return Response.status(400)
+                    .entity("Por favor, forneça o campo email").build();
+        }
+        
         try {
             friend.setId(friendHttp.getId());
             friend.setName(friendHttp.getName());
             friend.setEmail(friendHttp.getEmail());
             friend.setCity(friendHttp.getCity());
             friend.setBirthDate(new Util().toDate(friendHttp.getBirthDate(), "yyyy-MM-dd"));           
+            
             dao.update(friend);
-            return "Registro alterado com sucesso!";
+            
+            String data = "Amigo editado com sucesso: " + friend.toString();
+            return Response.status(200).entity(data).build();
         } catch (ParseException e) {
-            return "Erro ao alterar o registro " + e.getMessage();
+            return Response.status(500).entity(e.getMessage()).build();
         }
     }
    
@@ -89,12 +146,13 @@ public class FriendController {
      */
     @GET
     @Produces("application/json; charset=UTF-8")
-    public List<FriendHttp> ListAll() {
+    public List<FriendHttp> listAll() {
         List<FriendHttp> friendHttpList =  new ArrayList<>();
         List<Friend> friendList = dao.list();
 
         for (Friend f : friendList) {
-            friendHttpList.add(new FriendHttp(f.getId(), f.getName(), f.getEmail(), f.getCity(), f.getBirthDate().toString()));
+            friendHttpList.add(new FriendHttp(f.getId(), f.getName(), 
+                    f.getEmail(), f.getCity(), f.getBirthDate().toString()));
         }
 
         return friendHttpList;
@@ -108,13 +166,18 @@ public class FriendController {
     @GET
     @Produces("application/json; charset=UTF-8")
     @Path("/{id}")
-    public FriendHttp GetFriend(@PathParam("id") Integer id) {
+    public Response getFriend(@PathParam("id") Integer id) {
         Friend friend = dao.getFriend(id);
-
-        if(friend != null)
-            return new FriendHttp(friend.getId(), friend.getName(), friend.getEmail(), friend.getCity(), friend.getBirthDate().toString());
-
-        return null;
+        FriendHttp friendHttp;
+        
+        if (friend != null) {
+            friendHttp = new FriendHttp(friend.getId(), friend.getName(),
+                    friend.getEmail(), friend.getCity(), friend.getBirthDate().toString());
+            return Response.status(200).entity(friendHttp).build();
+        } else {
+            return Response.status(404).entity("O amigo com id: " + id + 
+                    " não foi encontrado").build();
+        }
     }
 
     /**
@@ -125,12 +188,18 @@ public class FriendController {
     @DELETE
     @Produces("application/json; charset=UTF-8")
     @Path("/{id}")	
-    public String Delete(@PathParam("id") Integer id) {
+    public Response delete(@PathParam("id") Integer id) {
+        if (dao.getFriend(id) == null) {
+            return Response.status(404).entity("O amigo com id: " + id + 
+                    " não foi encontrado").build();
+        }
+        
         try {
             dao.remove(id);
-            return "Registro excluido com sucesso!";
+            return Response.status(200).entity("O amigo com id " + id + 
+                    " foi exlcuído com sucesso").build();
         } catch (Exception e) {
-            return "Erro ao excluir o registro! " + e.getMessage();
+            return Response.status(500).entity(e.getMessage()).build();
         }
     }
 }
