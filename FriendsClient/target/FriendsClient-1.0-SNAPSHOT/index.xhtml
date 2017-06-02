@@ -15,41 +15,41 @@
                 <h:form id="mainForm">
                     <h:panelGrid id="mainPanel" columns="6">
                         <p:commandButton value="Login Facebook"/>
-                        <p:commandButton value="Novo Amigo" actionListener="#{mainMenu.prepareFriend}" update="friendDialog" oncomplete="PF('friendDialog').show()"/>
-                        <p:commandButton value="Mensagens" action="#{mainMenu.preparePost}"/>
+                        <p:commandButton value="Novo Amigo" actionListener="#{mainMenuBean.prepareFriend}" update="friendDialog" oncomplete="PF('friendDialog').show()"/>
+                        <p:commandButton value="Mensagens" action="#{mainMenuBean.preparePost}"/>
                         <p:inputText></p:inputText>
                         <p:commandButton value="Buscar"/>
                     </h:panelGrid>
-                    <p:dataTable id="friendsTable" var="friend" value="">
-                        <p:column>
-                            <f:facet name="header">
-                                <h:outputText value="Id"/>
-                            </f:facet>
-                            <h:outputText value="" />
+                    <p:dataTable id="friendsTable" 
+                                 var="f" 
+                                 value="#{mainMenuBean.friends}"
+                                 paginator="true" rows="5"
+                                 style="max-width: 1024px; min-width: 1250px"
+                                 emptyMessage="Nenhum registro.">
+                        <p:column headerText="Id" >
+                            <div align="left">
+                                <h:outputText value="#{f.id}" />
+                            </div>
                         </p:column>
-                        <p:column>
-                            <f:facet name="header">
-                                <h:outputText value="Nome"/>
-                            </f:facet>
-                            <h:outputText value=""/>
+                        <p:column headerText="Nomeee" >
+                        <div align="left" >
+                            <h:outputText value="#{f.name}"/>
+                        </div> 
+                        </p:column >
+                        <p:column headerText="Email" >
+                            <div align="left">
+                                <h:outputText value="#{f.email}"/>
+                            </div>
                         </p:column>
-                        <p:column>
-                            <f:facet name="header">
-                                <h:outputText value="Email"/>
-                            </f:facet>
-                            <h:outputText value=""/>
+                        <p:column headerText="Cidade" >
+                            <div align="left">
+                                <h:outputText value="#{f.city}"/>
+                            </div>
                         </p:column>
-                        <p:column>
-                            <f:facet name="header">
-                                <h:outputText value="Cidade"/>
-                            </f:facet>
-                            <h:outputText value=""/>
-                        </p:column>
-                        <p:column>
-                            <f:facet name="header">
-                                <h:outputText value="Nascimento"/>
-                            </f:facet>
-                            <h:outputText value=""/>
+                        <p:column headerText="Data Nascimento" >
+                            <div align="left">
+                                <h:outputText value="#{f.birthDate}"/>
+                            </div>
                         </p:column>
                     </p:dataTable>
                 </h:form>
@@ -57,37 +57,38 @@
         </pm:page>
 
         <pm:page id="postPage">
-            <pm:header title="Lista de Mensagens do Amigo"></pm:header>             
+            <pm:header title="Lista de Mensagens Enviadas"></pm:header>             
             <pm:content>
                 <h:form id="postForm">
                     <h:panelGrid id="postPanel" columns="2">
                         <p:button outcome="pm:mainPage" value="Voltar" />
-                        <p:commandButton value="Nova Mensagem" actionListener="#{mainMenu.prepareFriend}" update="postFriendDialog" oncomplete="PF('postFriendDialog').show()"/>
+                        <p:commandButton value="Nova Mensagem" actionListener="#{mainMenuBean.prepareFriend}" update="postFriendDialog" oncomplete="PF('postFriendDialog').show()"/>
                     </h:panelGrid>
-                    <p:dataTable id="postsFriendTable" var="friend" value="">
-                        <p:column>
-                            <f:facet name="header">
-                                <h:outputText value="Id"/>
-                            </f:facet>
-                            <h:outputText value="" />
+                    <p:dataTable id="postsFriendTable" 
+                                 var="p" 
+                                 value="#{mainMenuBean.posts}"
+                                 paginator="true" rows="5"
+                                 style="max-width: 1024px; min-width: 1250px"
+                                 emptyMessage="Nenhum registro.">
+                        <p:column headerText="Id" style="max-width: 10px; min-width: 10px; overflow: hidden">
+                            <div align="left">
+                                <h:outputText value="#{p.id}"/>
+                            </div>
                         </p:column>
-                        <p:column>
-                            <f:facet name="header">
-                                <h:outputText value="Amigo"/>
-                            </f:facet>
-                            <h:outputText value=""/>
+                        <p:column headerText="Amigo" style="max-width: 200px; min-width: 200px; overflow: hidden">
+                            <div align="left">
+                                <h:outputText value="#{p.friendReceiver}"/>
+                            </div>
                         </p:column>
-                        <p:column>
-                            <f:facet name="header">
-                                <h:outputText value="Mensagem"/>
-                            </f:facet>
-                            <h:outputText value=""/>
+                        <p:column headerText="Mensagem" style="max-width: 600px; min-width: 600px; overflow: hidden">
+                            <div align="left">
+                                <h:outputText value="#{p.message}"/>
+                            </div>
                         </p:column>
-                        <p:column>
-                            <f:facet name="header">
-                                <h:outputText value="Data Envio"/>
-                            </f:facet>
-                            <h:outputText value=""/>
+                        <p:column headerText="Data Envio" style="max-width: 250px; min-width: 250px; overflow: hidden">
+                            <div align="left">
+                                <h:outputText value="#{p.sendDate}"/>
+                            </div>
                         </p:column>
                     </p:dataTable>
                 </h:form>
