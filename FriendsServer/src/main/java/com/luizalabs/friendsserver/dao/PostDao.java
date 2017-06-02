@@ -16,6 +16,7 @@ public interface PostDao {
     public void save(Post post);
     public Post getPost(int id);
     public List<Post> list();
+    public List<Post> listBySender(int id);
     public void remove(Post post);
     public void remove(int id);
     public void update(Post post);

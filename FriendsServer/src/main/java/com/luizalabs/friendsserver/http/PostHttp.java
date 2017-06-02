@@ -24,7 +24,7 @@ public class PostHttp {
     
     }
     
-    public PostHttp(int id, String message, String sendDate, int friendSender, int friendReceiver) {
+    public PostHttp(int id, String message, String sendDate, int friendReceiver, int friendSender) {
         super();
         this.id = id;
         this.message = message;

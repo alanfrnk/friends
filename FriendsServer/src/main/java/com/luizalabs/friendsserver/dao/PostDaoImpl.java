@@ -43,6 +43,16 @@ public class PostDaoImpl implements PostDao {
         session.close();
         return list;
     }
+    
+    @Override
+    public List<Post> listBySender(int id) {
+        Session session = HibernateUtil.getSessionFactory().openSession();
+        session.beginTransaction();
+        List list = session.createQuery("from Post where friendSender = " + id).list();
+        session.getTransaction().commit();
+        session.close();
+        return list;
+    }
 
     @Override
     public void remove(Post post) {
@@ -71,5 +81,4 @@ public class PostDaoImpl implements PostDao {
         t.commit();
         session.close();
     }
-    
 }

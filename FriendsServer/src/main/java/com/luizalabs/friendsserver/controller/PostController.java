@@ -123,6 +123,25 @@ public class PostController {
 
         return null;
     }
+    
+    /**
+     *
+     * @param id
+     * @return
+     */
+    @GET
+    @Produces("application/json; charset=UTF-8")
+    @Path("/sender/{id}")
+    public List<PostHttp> getPostBySender(@PathParam("id") Integer id) {
+        List<PostHttp> postHttpList =  new ArrayList<>();
+        List<Post> postList = dao.listBySender(id);
+
+        for (Post p : postList) {
+            postHttpList.add(new PostHttp(p.getId(), p.getMessage(), p.getSendDate().toString(), p.getFriendReceiver().getId(), p.getFriendSender().getId()));
+        }
+
+        return postHttpList;
+    }
 
     /**
      *
