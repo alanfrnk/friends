@@ -20,7 +20,7 @@
                         <p:inputText></p:inputText>
                         <p:commandButton value="Buscar"/>
                     </h:panelGrid>
-                    <p:dataTable id="friendsTable" 
+                    <p:dataTable id="friendsTable"
                                  var="f" 
                                  value="#{mainMenuBean.friends}"
                                  paginator="true" rows="5"
@@ -31,8 +31,8 @@
                                 <h:outputText value="#{f.id}" />
                             </div>
                         </p:column>
-                        <p:column headerText="Nomeee" >
-                        <div align="left" >
+                        <p:column headerText="Nome" >
+                        <div align="left">
                             <h:outputText value="#{f.name}"/>
                         </div> 
                         </p:column >

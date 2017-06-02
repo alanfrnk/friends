@@ -16,6 +16,8 @@ import java.util.List;
 import javax.faces.bean.ManagedBean;
 import javax.faces.bean.SessionScoped;
 import javax.faces.event.ActionEvent;
+import javax.faces.model.DataModel;
+import javax.faces.model.ListDataModel;
 
 /**
  *
@@ -25,14 +27,12 @@ import javax.faces.event.ActionEvent;
 @SessionScoped
 public class MainMenuBean implements Serializable {
 
+    private int operacao;
     private Friend friend;
     private Post post;
-    private List<Friend> friends;
+    private DataModel friends;
+    private DataModel posts;
     
-    public MainMenuBean() {
-
-    }
-
     public Friend getFriend() {
         return friend;
     }
@@ -41,8 +41,13 @@ public class MainMenuBean implements Serializable {
         this.friend = friend;
     }
 
-    public void prepareFriend(ActionEvent actionEvent){
-        friend = new Friend();
+    public void prepareFriend(int operacao){
+        if (operacao == 1)
+            friend = new Friend();
+        else
+            friend = (Friend) friends.getRowData();
+        
+        this.operacao = operacao;
     }
     
     public Post getPost() {
@@ -57,19 +62,27 @@ public class MainMenuBean implements Serializable {
         return "pm:postPage";
     }
     
-    public List<Friend> getFriends() {
+    public DataModel getFriends() {
         Client c = Client.create();
         WebResource wr = c.resource("http://localhost:8080/FriendsServer/api/v1/friends");
         String json = wr.get(String.class);
         Gson gson = new Gson();
-        return gson.fromJson(json, new TypeToken<List<Friend>>(){}.getType());
+        List<Friend> f = gson.fromJson(json, new TypeToken<List<Friend>>(){}.getType());
+        friends = new ListDataModel(f);
+        return friends;
     }
     
-    public List<Post> getPosts() {
+    public DataModel getPosts() {
         Client c = Client.create();
         WebResource wr = c.resource("http://localhost:8080/FriendsServer/api/v1/posts/sender/11");
         String json = wr.get(String.class);
         Gson gson = new Gson();
-        return gson.fromJson(json, new TypeToken<List<Post>>(){}.getType());
+        List<Post> p = gson.fromJson(json, new TypeToken<List<Post>>(){}.getType());
+        posts = new ListDataModel(p);
+        return posts;
+    }
+    
+    public void saveFriend(ActionEvent actionEvent){ 
+        
     }
 }
