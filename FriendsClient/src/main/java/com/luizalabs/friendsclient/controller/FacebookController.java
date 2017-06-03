@@ -5,6 +5,9 @@
  */
 package com.luizalabs.friendsclient.controller;
 
+import com.luizalabs.friendsclient.client.FriendClient;
+import com.luizalabs.friendsclient.model.Friend;
+import java.util.List;
 import java.util.Map;
 import java.util.Properties;
 import javax.faces.bean.ManagedBean;
@@ -13,6 +16,7 @@ import javax.faces.context.ExternalContext;
 import javax.faces.context.FacesContext;
 import javax.servlet.http.HttpServletRequest;
 import org.brickred.socialauth.AuthProvider;
+import org.brickred.socialauth.Contact;
 import org.brickred.socialauth.Profile;
 import org.brickred.socialauth.SocialAuthConfig;
 import org.brickred.socialauth.SocialAuthManager;
@@ -60,7 +64,20 @@ public class FacebookController {
         if (socialManager != null) {
             AuthProvider provider = socialManager.connect(params);
             this.setProfile(provider.getUserProfile());
+                    
+            List<Contact> contacts = provider.getContactList();
+            for (Contact c : contacts) {
+                Friend friend = new Friend();
+                friend.setName(c.getDisplayName());
+                friend.setEmail(c.getEmail());
+                friend.setProfileImage(c.getProfileImageURL());
+                friend.setProfileLink("https://www.facebook.com/" + c.getId());
+                friend.setBirthDate("1900-01-01");
+                new FriendClient().postRequest(friend);
+            }
         }
+        
+        
 
         FacesContext.getCurrentInstance().getExternalContext().redirect(mainURL);
     }

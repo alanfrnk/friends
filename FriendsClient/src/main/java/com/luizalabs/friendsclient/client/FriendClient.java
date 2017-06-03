@@ -49,7 +49,8 @@ public class FriendClient {
 
             String input = "{\"name\": \"" + friend.getName() + "\", "
                     + "\"email\":\"" + friend.getEmail() + "\", "
-                    + "\"city\":\"" + friend.getCity() + "\", "
+                    + "\"profileLink\":\"" + friend.getProfileLink() + "\", "
+                    + "\"profileImage\":\"" + friend.getProfileImage()+ "\", "
                     + "\"birthDate\":\"" + friend.getBirthDate() + "\"}";
 
             ClientResponse response = webResource.accept("application/json")
@@ -72,7 +73,8 @@ public class FriendClient {
             String input = "{\"id\": \"" + friend.getId()+ "\", "
                     + "\"name\": \"" + friend.getName() + "\", "
                     + "\"email\":\"" + friend.getEmail() + "\", "
-                    + "\"city\":\"" + friend.getCity() + "\", "
+                    + "\"profileLink\":\"" + friend.getProfileLink() + "\", "
+                    + "\"profileImage\":\"" + friend.getProfileImage()+ "\", "
                     + "\"birthDate\":\"" + friend.getBirthDate() + "\"}";
 
             ClientResponse response = webResource.accept("application/json")

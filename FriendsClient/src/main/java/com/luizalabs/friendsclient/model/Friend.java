@@ -13,19 +13,22 @@ public class Friend {
     private int id;
     private String name;
     private String email;
-    private String city;
+    private String profileLink;
+    private String profileImage;
     private String birthDate;
 
     public Friend(){
     
     }
     
-    public Friend(int id, String name, String email, String city, String birthDate){
+    public Friend(int id, String name, String email, String profileLink,
+            String profileImage, String birthDate){
         super();
         this.id = id;
         this.name = name;
         this.email = email;
-        this.city = city;
+        this.profileLink = profileLink;
+        this.profileLink = profileImage;
         this.birthDate = birthDate;
     }
     
@@ -53,12 +56,12 @@ public class Friend {
         this.email = email;
     }
 
-    public String getCity() {
-        return city;
+    public String getProfileLink() {
+        return profileLink;
     }
 
-    public void setCity(String city) {
-        this.city = city;
+    public void setProfileLink(String profileLink) {
+        this.profileLink = profileLink;
     }
 
     public String getBirthDate() {
@@ -67,7 +70,15 @@ public class Friend {
 
     public void setBirthDate(String birthDate) {
         this.birthDate = birthDate;
-    }    
+    }   
+    
+    public String getProfileImage() {
+        return profileImage;
+    }
+
+    public void setProfileImage(String profileImage) {
+        this.profileImage = profileImage;
+    }
     
     @Override
     public String toString() {
@@ -75,7 +86,8 @@ public class Friend {
         stringBuilder.append("id : ").append(this.id).append('\n');
         stringBuilder.append("name : ").append(this.name).append('\n');
         stringBuilder.append("email : ").append(this.email).append('\n');
-        stringBuilder.append("city : ").append(this.city).append('\n');
+        stringBuilder.append("profileLink : ").append(this.profileLink).append('\n');
+        stringBuilder.append("profileImage : ").append(this.profileImage).append('\n');
         stringBuilder.append("birthDate : ").append(this.birthDate).append('\n');
         return stringBuilder.toString();
     }

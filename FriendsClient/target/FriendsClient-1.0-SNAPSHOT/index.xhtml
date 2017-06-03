@@ -35,15 +35,16 @@
                                  rows="5"
                                  style="max-width: 1024px; min-width: 1250px"
                                  emptyMessage="Nenhum registro.">
-                        <p:column headerText="Id" 
-                                  width="25" 
+                        <p:column headerText="" 
+                                  width="35" 
                                   style="vertical-align: middle">
                             <div align="left">
-                                <h:outputText value="#{f.id}" />
+                                <p:graphicImage value="#{f.profileImage}">
+                                </p:graphicImage>
                             </div>
                         </p:column>
                         <p:column headerText="Nome" 
-                                  width="210" 
+                                  width="200" 
                                   style="vertical-align: middle">
                             <div align="left">
                                 <h:outputText value="#{f.name}"/>
@@ -56,11 +57,13 @@
                                 <h:outputText value="#{f.email}"/>
                             </div>
                         </p:column>
-                        <p:column headerText="Cidade" 
+                        <p:column headerText="Perfil" 
                                   width="170" 
                                   style="vertical-align: middle">
                             <div align="left">
-                                <h:outputText value="#{f.city}"/>
+                                <p:button href="#{f.profileLink}" 
+                                          value="Ver Perfil" 
+                                          target="_blank"/>
                             </div>
                         </p:column>
                         <p:column headerText="Data Nascimento" 
@@ -95,7 +98,8 @@
             <pm:content>
                 <h:form id="postForm">
                     <h:panelGrid id="postPanel" columns="2">
-                        <p:button outcome="pm:mainPage" value="Voltar" />
+                        <p:button outcome="pm:mainPage" 
+                                  value="Voltar" />
                         <p:commandButton value="Nova Mensagem" 
                                          actionListener="#{mainController.prepareFriend}" 
                                          update="postFriendDialog" 
@@ -153,17 +157,35 @@
                   showEffect="pop" 
                   styleClass="ui-page-theme-a ui-bar-inherit">
             <h:form id="friendForm">
-                <p:outputLabel for="name" value="Nome:" />
-                <p:inputText id="name" size="70" value="#{mainController.friend.name}"/>
+                <p:outputLabel for="name"
+                               value="Nome:" />
+                <p:inputText id="name" 
+                             size="70" 
+                             value="#{mainController.friend.name}"/>
  
-                <p:outputLabel for="email" value="Email:" />
-                <p:inputText id="email" size="70" value="#{mainController.friend.email}"/>
+                <p:outputLabel for="email" 
+                               value="Email:" />
+                <p:inputText id="email" 
+                             size="70" 
+                             value="#{mainController.friend.email}"/>
  
-                <p:outputLabel for="city" value="Cidade:" />
-                <p:inputText id="city" size="70" value="#{mainController.friend.city}"/>
+                <p:outputLabel for="profileLink" 
+                               value="Link do Perfil:" />
+                <p:inputText id="profileLink" 
+                             size="70" 
+                             value="#{mainController.friend.profileLink}"/>
  
-                <p:outputLabel for="birthDate" value="Data Nascimento:" />
-                <p:inputText id="birthDate" size="70" value="#{mainController.friend.birthDate}"/>
+                <p:outputLabel for="profileImage" 
+                               value="Link da Imagem do Perfil:" />
+                <p:inputText id="profileImage" 
+                             size="70" 
+                             value="#{mainController.friend.profileImage}"/>
+ 
+                <p:outputLabel for="birthDate" 
+                               value="Data Nascimento:" />
+                <p:inputText id="birthDate" 
+                             size="70" 
+                             value="#{mainController.friend.birthDate}"/>
                 
                 <p:commandButton id="saveFriend"
                                  value="Salvar"
