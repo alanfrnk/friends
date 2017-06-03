@@ -18,20 +18,20 @@ O projeto está dividido em 2 partes:
 
 ## Ferramentas Usadas
 
-1 - IDE de Desenvolvimento: [NetBeans 8.2 com Java EE 7](https://netbeans.org)
-2 - Persistência dos Dados: [Hibernate 4.3.1](http://hibernate.org/)
-3 - Banco de Dados Relacional: [MySQL 5.7.18](https://www.mysql.com)
-4 - Gerenciador de Dependências: [Maven 3.1](https://maven.apache.org/)
-5 - Construção do Front End: [JSF 2.2](https://javaee.github.io/javaserverfaces-spec/)
-6 - UI Design do Front End: [PrimeFaces 6.1](https://www.primefaces.org/)
-7 - Implementação do RESTful Front e Back End: [Jersey 2.22.1](https://github.com/jersey)
-8 - Login no Facebook e Acesso à Graph API: [Socialauth 4.12](https://github.com/3pillarlabs/socialauth)
-9 - Servidor de Aplicação: [Apache Tomcat 8.5](http://tomcat.apache.org/)
-10 - Testes da API RESTful: [SoapUI](https://www.soapui.org/) 
+- IDE de Desenvolvimento: [NetBeans 8.2 com Java EE 7](https://netbeans.org)
+- Persistência dos Dados: [Hibernate 4.3.1](http://hibernate.org/)
+- Banco de Dados Relacional: [MySQL 5.7.18](https://www.mysql.com)
+- Gerenciador de Dependências: [Maven 3.1](https://maven.apache.org/)
+- Construção do Front End: [JSF 2.2](https://javaee.github.io/javaserverfaces-spec/)
+- UI Design do Front End: [PrimeFaces 6.1](https://www.primefaces.org/)
+- Implementação do RESTful Front e Back End: [Jersey 2.22.1](https://github.com/jersey)
+- Login no Facebook e Acesso à Graph API: [Socialauth 4.12](https://github.com/3pillarlabs/socialauth)
+- Servidor de Aplicação: [Apache Tomcat 8.5](http://tomcat.apache.org/)
+- Testes da API RESTful: [SoapUI](https://www.soapui.org/) 
 
 ## Como Executar
 
-- Instalar as ferramentas 1, 2 e 9 da lista acima.
+- Instalar a IDE [NetBeans 8.2 com Java EE 7](https://netbeans.org), instalar também o DB Server [MySQL 5.7.18](https://www.mysql.com) e por fim instalar o servidor de aplicação [Apache Tomcat 8.5](http://tomcat.apache.org/).
 - Criar um banco de dados chamado FRIENDS_DB e rodar os dois script abaixo para criar as duas tabelas do projeto:
 
 ```SQL
