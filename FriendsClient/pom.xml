@@ -29,7 +29,6 @@
             <version>1.18.1</version>
         </dependency>
         
-        <!-- https://mvnrepository.com/artifact/com.google.code.gson/gson -->
         <dependency>
             <groupId>com.google.code.gson</groupId>
             <artifactId>gson</artifactId>
@@ -48,6 +47,13 @@
             <version>6.1</version>
         </dependency>
         
+         <!-- https://mvnrepository.com/artifact/org.brickred/socialauth -->
+        <dependency>
+            <groupId>org.brickred</groupId>
+            <artifactId>socialauth</artifactId>
+            <version>4.12</version>
+        </dependency>
+
         <dependency>
             <groupId>javax</groupId>
             <artifactId>javaee-web-api</artifactId>

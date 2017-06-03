@@ -9,6 +9,7 @@ import com.luizalabs.friendsclient.client.FriendClient;
 import com.luizalabs.friendsclient.client.PostClient;
 import com.luizalabs.friendsclient.model.Friend;
 import com.luizalabs.friendsclient.model.Post;
+import java.io.Serializable;
 import javax.faces.bean.ManagedBean;
 import javax.faces.bean.SessionScoped;
 import javax.faces.model.DataModel;
@@ -57,8 +58,9 @@ public class MainController {
     
     public String returnPost(){
         Friend f = (Friend)(friends.getRowData());
+        friendSelected = f.getId();
         this.posts = new ListDataModel(new PostClient()
-                .getAllPostsByFriend(String.valueOf(f.getId())));
+                .getAllPostsByFriend(String.valueOf(friendSelected)));
         return "pm:postPage";
     }
     
@@ -77,7 +79,13 @@ public class MainController {
     }
     
     public DataModel getPosts() {
+        posts = new ListDataModel(new PostClient()
+                .getAllPostsByFriend(String.valueOf(friendSelected)));
         return posts;
+    }
+    
+    public void setPosts(DataModel posts) {
+        this.posts = posts;
     }
     
     public void saveFriend() {

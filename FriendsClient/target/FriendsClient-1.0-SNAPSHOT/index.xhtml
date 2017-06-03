@@ -14,15 +14,19 @@
             <pm:content>
                 <h:form id="mainForm">
                     <h:panelGrid id="mainPanel" columns="6">
-                        <p:commandButton value="Login Facebook"/>
-                        <p:commandButton value="Novo Amigo" 
-                                         actionListener="#{mainController.prepareFriend(1)}" 
-                                         update="friendDialog" 
-                                         oncomplete="PF('friendDialog').show()"/>
+                        <p:commandButton value="Login Facebook" 
+                                         actionListener="#{facebookController.connect()}" 
+                                         rendered="#{empty facebookController.profile}"/>
                         <p:commandButton value="Todas Mensagens"
                                          actionListener="#{mainController.returnDialogPost}" 
                                          oncomplete = "PF('postDialog').show()"
                                          update = "postDialog"/>
+                        <p:graphicImage value="#{facebookController.profile.profileImageURL}"
+                                        rendered="#{not empty facebookController.profile}">
+                        </p:graphicImage>
+                        <p:outputLabel>
+                            #{facebookController.profile.fullName}
+                        </p:outputLabel>
                     </h:panelGrid>
                     <p:dataTable id="friendsTable"
                                  var="f" 
