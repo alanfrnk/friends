@@ -82,5 +82,5 @@ Clicando no botão Todas as Mensagens é aberta um dialog que exibe todas as men
 
 ## Back End (API v1)
 
-O Back End é o responsável por receber e listar os dados, fazendo a comunicação com o DB. É no Back End que está toda a regra de negócio bem como os métodos responsáveis por validar as informações e criar, ler, editar e deletar os dados. É ele quem disponibiliza a [API Friends v1](alanfrnk/friends/wiki).
+O Back End é o responsável por receber e listar os dados, fazendo a comunicação com o DB. É no Back End que está toda a regra de negócio bem como os métodos responsáveis por validar as informações e criar, ler, editar e deletar os dados. É ele quem disponibiliza a [API Friends v1](https://github.com/alanfrnk/friends/wiki). Mais informações sobre a API e seus métodos é só acessar a [Wiki do Projeto](https://github.com/alanfrnk/friends/wiki).
 
