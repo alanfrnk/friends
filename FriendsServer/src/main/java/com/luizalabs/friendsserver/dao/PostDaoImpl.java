@@ -55,6 +55,16 @@ public class PostDaoImpl implements PostDao {
     }
 
     @Override
+    public List<Post> listByReceiver(int id) {
+        Session session = HibernateUtil.getSessionFactory().openSession();
+        session.beginTransaction();
+        List list = session.createQuery("from Post where friendReceiver = " + id).list();
+        session.getTransaction().commit();
+        session.close();
+        return list;
+    }
+    
+    @Override
     public void remove(Post post) {
         Session session = HibernateUtil.getSessionFactory().openSession();
         Transaction t = session.beginTransaction();

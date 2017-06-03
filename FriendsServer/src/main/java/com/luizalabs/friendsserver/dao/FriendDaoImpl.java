@@ -6,6 +6,7 @@
 package com.luizalabs.friendsserver.dao;
 
 import com.luizalabs.friendsserver.model.Friend;
+import com.luizalabs.friendsserver.model.Post;
 import com.luizalabs.friendsserver.util.HibernateUtil;
 import java.util.List;
 import org.hibernate.Session;
@@ -58,6 +59,13 @@ public class FriendDaoImpl implements FriendDao {
         Session session = HibernateUtil.getSessionFactory().openSession();
         Transaction t = session.beginTransaction();
         Friend friend = (Friend) session.get(Friend.class, id);
+        List<Post> listPost = session.createQuery("from Post where friendSender = " + id 
+                + " or friendReceiver = " + id).list();
+        
+        for (Post p : listPost) {
+            session.delete(p);
+        }
+        
         session.delete(friend);
         t.commit();
         session.close();

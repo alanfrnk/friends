@@ -21,14 +21,11 @@ import javax.persistence.Temporal;
 public class Friend implements Serializable {
     
     @Id
-    private int id;
-    
-    private String name;
-    
+    private int id;    
+    private String name;    
     private String email;
-    
-    private String city;
-    
+    private String profileLink;
+    private String profileImage;
     @Temporal(javax.persistence.TemporalType.DATE)
     private Date birthDate;
 
@@ -75,17 +72,17 @@ public class Friend implements Serializable {
     }
 
     /**
-     * @return the city
+     * @return the profileLink
      */
-    public String getCity() {
-        return city;
+    public String getProfileLink() {
+        return profileLink;
     }
 
     /**
-     * @param city the city to set
+     * @param profileLink the profileLink to set
      */
-    public void setCity(String city) {
-        this.city = city;
+    public void setProfileLink(String profileLink) {
+        this.profileLink = profileLink;
     }
 
     /**
@@ -102,13 +99,28 @@ public class Friend implements Serializable {
         this.birthDate = birthDate;
     }
     
+    /**
+     * @return the profileImage
+     */
+    public String getProfileImage() {
+        return profileImage;
+    }
+
+    /**
+     * @param profileImage the profileImage to set
+     */
+    public void setProfileImage(String profileImage) {
+        this.profileImage = profileImage;
+    }
+    
     @Override
     public String toString() {
         StringBuilder stringBuilder = new StringBuilder();
         stringBuilder.append("id : ").append(this.id).append('\n');
         stringBuilder.append("name : ").append(this.name).append('\n');
         stringBuilder.append("email : ").append(this.email).append('\n');
-        stringBuilder.append("city : ").append(this.city).append('\n');
+        stringBuilder.append("profileImage : ").append(this.profileLink).append('\n');
+        stringBuilder.append("profileLink : ").append(this.profileLink).append('\n');
         stringBuilder.append("birthDate : ")
                 .append(new SimpleDateFormat("yyyy-MM-dd")
                         .format(this.birthDate));

@@ -6,7 +6,6 @@ com/luizalabs/friendsserver/http/PostHttp.class
 com/luizalabs/friendsserver/dao/FriendDaoImpl.class
 com/luizalabs/friendsserver/util/HibernateUtil.class
 com/luizalabs/friendsserver/http/FriendHttp.class
-NewClass.class
 com/luizalabs/friendsserver/dao/FriendDao.class
 com/luizalabs/friendsserver/dao/PostDao.class
 com/luizalabs/friendsserver/util/Util.class

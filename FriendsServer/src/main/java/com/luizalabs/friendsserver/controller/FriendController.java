@@ -58,9 +58,14 @@ public class FriendController {
                     .entity("Por favor, forneça o campo birthDate").build();
         }
         
-        if (friendHttp.getCity() == null) {
+        if (friendHttp.getProfileLink() == null) {
             return Response.status(400)
-                    .entity("Por favor, forneça o campo city").build();
+                    .entity("Por favor, forneça o campo profileLink").build();
+        }
+        
+        if (friendHttp.getProfileImage() == null) {
+            return Response.status(400)
+                    .entity("Por favor, forneça o campo profileImage").build();
         }
         
         if (friendHttp.getEmail() == null) {
@@ -71,7 +76,8 @@ public class FriendController {
         try { 
             friend.setName(friendHttp.getName());
             friend.setEmail(friendHttp.getEmail());
-            friend.setCity(friendHttp.getCity());
+            friend.setProfileLink(friendHttp.getProfileLink());
+            friend.setProfileImage(friendHttp.getProfileImage());
             friend.setBirthDate(new Util().toDate(friendHttp.getBirthDate(), "yyyy-MM-dd"));
             
             dao.save(friend); 
@@ -114,9 +120,14 @@ public class FriendController {
                     .entity("Por favor, forneça o campo birthDate").build();
         }
         
-        if (friendHttp.getCity() == null) {
+        if (friendHttp.getProfileLink() == null) {
             return Response.status(400)
-                    .entity("Por favor, forneça o campo city").build();
+                    .entity("Por favor, forneça o campo profileLink").build();
+        }
+        
+        if (friendHttp.getProfileImage() == null) {
+            return Response.status(400)
+                    .entity("Por favor, forneça o campo profileImage").build();
         }
         
         if (friendHttp.getEmail() == null) {
@@ -128,7 +139,8 @@ public class FriendController {
             friend.setId(friendHttp.getId());
             friend.setName(friendHttp.getName());
             friend.setEmail(friendHttp.getEmail());
-            friend.setCity(friendHttp.getCity());
+            friend.setProfileLink(friendHttp.getProfileLink());
+            friend.setProfileImage(friendHttp.getProfileImage());
             friend.setBirthDate(new Util().toDate(friendHttp.getBirthDate(), "yyyy-MM-dd"));           
             
             dao.update(friend);
@@ -152,7 +164,8 @@ public class FriendController {
 
         for (Friend f : friendList) {
             friendHttpList.add(new FriendHttp(f.getId(), f.getName(), 
-                    f.getEmail(), f.getCity(), f.getBirthDate().toString()));
+                    f.getEmail(), f.getProfileLink(), f.getProfileImage(),
+                    f.getBirthDate().toString()));
         }
 
         return friendHttpList;
@@ -172,7 +185,8 @@ public class FriendController {
         
         if (friend != null) {
             friendHttp = new FriendHttp(friend.getId(), friend.getName(),
-                    friend.getEmail(), friend.getCity(), friend.getBirthDate().toString());
+                    friend.getEmail(), friend.getProfileLink(),
+                    friend.getProfileImage(), friend.getBirthDate().toString());
             return Response.status(200).entity(friendHttp).build();
         } else {
             return Response.status(404).entity("O amigo com id: " + id + 

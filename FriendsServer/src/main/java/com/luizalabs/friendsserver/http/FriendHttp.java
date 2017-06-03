@@ -17,19 +17,21 @@ public class FriendHttp {
     private int id;
     private String name;
     private String email;
-    private String city;
+    private String profileLink;
+    private String profileImage;
     private String birthDate;
 
     public FriendHttp(){
     
     }
     
-    public FriendHttp(int id, String name, String email, String city, String birthDate){
+    public FriendHttp(int id, String name, String email, String profileLink, String profileImage, String birthDate){
         super();
         this.id = id;
         this.name = name;
         this.email = email;
-        this.city = city;
+        this.profileLink = profileLink;
+        this.profileImage = profileImage;
         this.birthDate = birthDate;
     }
     
@@ -57,12 +59,12 @@ public class FriendHttp {
         this.email = email;
     }
 
-    public String getCity() {
-        return city;
+    public String getProfileLink() {
+        return profileLink;
     }
 
-    public void setCity(String city) {
-        this.city = city;
+    public void setProfileLink(String profileLink) {
+        this.profileLink = profileLink;
     }
 
     public String getBirthDate() {
@@ -72,4 +74,12 @@ public class FriendHttp {
     public void setBirthDate(String birthDate) {
         this.birthDate = birthDate;
     }    
+
+    public String getProfileImage() {
+        return profileImage;
+    }
+
+    public void setProfileImage(String profileImage) {
+        this.profileImage = profileImage;
+    }
 }
