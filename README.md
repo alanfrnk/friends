@@ -61,11 +61,13 @@ O projeto está dividido em 2 partes:
 - Abrir os dois projetos FriendsServer e FriendsClient e rodá-los respectivamente no NetBeans.
 
     URL do Client: http://localhost:8080/FriendsClient
+    
     URL do Server: http://localhost:8080/FriendsServer
 
 - Devido à uma "limitação" do método GET me/friends da API do Facebook só é possível listar os amigos que também estão autorizados no aplicativo, criei um usuário fake para teste e deixo as credenciais abaixo para que possam testar:
     
     email: mariacarmemdesouza41@gmail.com
+    
     senha: 29102002
 
 - Ao fazer login o sistema acessa o facebook e importa a lista de amigos com algumas informações, é possível editar os contatos importados para a base, ou também criar novos, tanto a importação dos amigos do Facebook quanto a criação de novo acessa a API/v1 criada.
@@ -80,7 +82,7 @@ Clicando no botão Todas as Mensagens é aberta um dialog que exibe todas as men
 
 (*) Essa tela abre um dialog com as mensagens enviadas para um determinado amigo, e também seria responsável por enviar as mensagens pra esse amigo, usando a API do Facebook para postar na linha do tempo, porém não tive tempo hábil para implementar essa funcionalidade.
 
-## Back End (API v1)
+## Back End
 
 O Back End é o responsável por receber e listar os dados, fazendo a comunicação com o DB. É no Back End que está toda a regra de negócio bem como os métodos responsáveis por validar as informações e criar, ler, editar e deletar os dados. É ele quem disponibiliza a [API Friends v1](https://github.com/alanfrnk/friends/wiki). Mais informações sobre a API e seus métodos é só acessar a [Wiki do Projeto](https://github.com/alanfrnk/friends/wiki).
 
