@@ -57,21 +57,6 @@ public class FriendController {
             return Response.status(400)
                     .entity("Por favor, forneça o campo birthDate").build();
         }
-        
-        if (friendHttp.getProfileLink() == null) {
-            return Response.status(400)
-                    .entity("Por favor, forneça o campo profileLink").build();
-        }
-        
-        if (friendHttp.getProfileImage() == null) {
-            return Response.status(400)
-                    .entity("Por favor, forneça o campo profileImage").build();
-        }
-        
-        if (friendHttp.getEmail() == null) {
-            return Response.status(400)
-                    .entity("Por favor, forneça o campo email").build();
-        }
 
         try { 
             friend.setName(friendHttp.getName());
@@ -118,21 +103,6 @@ public class FriendController {
         if (friendHttp.getBirthDate() == null) {
             return Response.status(400)
                     .entity("Por favor, forneça o campo birthDate").build();
-        }
-        
-        if (friendHttp.getProfileLink() == null) {
-            return Response.status(400)
-                    .entity("Por favor, forneça o campo profileLink").build();
-        }
-        
-        if (friendHttp.getProfileImage() == null) {
-            return Response.status(400)
-                    .entity("Por favor, forneça o campo profileImage").build();
-        }
-        
-        if (friendHttp.getEmail() == null) {
-            return Response.status(400)
-                    .entity("Por favor, forneça o campo email").build();
         }
         
         try {
